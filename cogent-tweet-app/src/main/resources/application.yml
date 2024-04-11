@@ -6,11 +6,10 @@ spring:
   application:
     name: USER-SERVICE
   datasource:
-    url: jdbc:mysql://localhost:3306/tweetdb
+    url: jdbc:mysql://localhost:3306/tweetdb?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-
   jps:
     hibernate:
       ddl-auto: update
