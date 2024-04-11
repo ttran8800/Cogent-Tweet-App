@@ -25,6 +25,15 @@ public class Tweet {
     @Column(nullable = false, length = 144)
     private String message;
 
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(
+            name = "user_Id",
+            nullable = false
+    )
+    private User user;
+
     @ManyToMany (
             fetch = FetchType.LAZY
     )
