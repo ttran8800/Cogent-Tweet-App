@@ -1,4 +1,4 @@
-package com.tweet.cogent.tweet.app.Entity;
+package com.tweet.cogent.tweet.app.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
