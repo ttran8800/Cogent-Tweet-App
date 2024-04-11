@@ -1,4 +1,4 @@
-package com.tweet.cogent.tweet.app.Entity;
+package com.tweet.cogent.tweet.app.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,6 +24,15 @@ public class Tweet {
     private Date date;
     @Column(nullable = false, length = 144)
     private String message;
+
+    @ManyToOne(
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(
+            name = "user_Id",
+            nullable = false
+    )
+    private User user;
 
     @ManyToMany (
             fetch = FetchType.LAZY
