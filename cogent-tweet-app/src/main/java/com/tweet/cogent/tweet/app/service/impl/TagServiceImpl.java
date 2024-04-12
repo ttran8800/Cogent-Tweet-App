@@ -1,4 +1,4 @@
-package com.tweet.cogent.tweet.app.service.Impl;
+package com.tweet.cogent.tweet.app.service.impl;
 
 import com.tweet.cogent.tweet.app.entity.Tag;
 import com.tweet.cogent.tweet.app.repository.TagRepository;

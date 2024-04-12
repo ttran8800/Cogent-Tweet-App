@@ -5,9 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @NoArgsConstructor
@@ -43,4 +41,8 @@ public class Tweet {
             inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "tagId")
     )
     Set<Tag> tagSet = new HashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_tweet_id")
+    private Tweet parentTweet;
 }
