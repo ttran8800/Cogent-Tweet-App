@@ -30,13 +30,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserExist(String longId) {
-        return userRepository.isUserExist(longId);
+    public boolean isUserExist(String loginId) {
+        return userRepository.existsByLoginId(loginId);
     }
 
     @Override
     public User saveUser(User user) {
-        Role role = roleRepository.findByRoleName("USER").orElseThrow(() -> new RuntimeException("role not found"));
+        Role role = roleRepository.findByName("USER").orElseThrow(() -> new RuntimeException("role not found"));
         user.getRoles().add(role);
         return userRepository.save(user);
     }
