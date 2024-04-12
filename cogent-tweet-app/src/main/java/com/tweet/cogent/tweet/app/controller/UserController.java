@@ -5,13 +5,11 @@ import com.tweet.cogent.tweet.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1.0/tweets")
 public class UserController {
@@ -19,13 +17,13 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> createUser(User user) {
+    public ResponseEntity<User> createUser(@RequestBody User user) {
         User newUser = userService.saveUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/login")
-    public ResponseEntity<String> userLogin(User user) {
+    public ResponseEntity<String> userLogin(@RequestBody User user) {
         if (userService.isUserExist(user.getLoginId())) {
             User userInDb = userService.findByLoginId(user.getLoginId());
             if (user.getPassword().equals(userInDb.getPassword())) {
