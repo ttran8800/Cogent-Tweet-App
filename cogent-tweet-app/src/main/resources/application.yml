@@ -3,14 +3,12 @@ server:
 
 
 spring:
-  application:
-    name: USER-SERVICE
   datasource:
     url: jdbc:mysql://localhost:3306/tweetdb?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-  jps:
+  jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
