@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.management.relation.Role;
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -60,5 +60,13 @@ public class User {
                     referencedColumnName = "id"
             )
     )
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(
+            mappedBy = "user",
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private Set<Tweet> tweets = new HashSet<>();
 }

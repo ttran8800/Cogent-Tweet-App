@@ -7,6 +7,6 @@ import javax.swing.text.html.Option;
 import java.util.Optional;
 
 public interface RoleRepository extends JpaRepository<Long, Role> {
-    Optional<Role> findByLoginId(String name);
+    Optional<Role> findByRoleName(String name);
 
 }
