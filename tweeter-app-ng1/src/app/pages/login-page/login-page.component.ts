@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-
+import { EmailValidator, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IUser } from 'src/app/models/user.model';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -8,26 +9,55 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./login-page.component.css']
 })
 export class LoginPageComponent {
-
-  constructor(private fb: FormBuilder){
-
+  message = ''
+  alertClass = ''
+  constructor(private fb: FormBuilder, private authService: AuthService) {
+   
   }
-
   loginForm = this.fb.group({
-    email: [null, [Validators.required, Validators.email]],
-    password: [null, [Validators.required, Validators.minLength(6)]]
+    usernameOrEmail: [null, Validators.required],
+    password: [null,[ Validators.required, Validators.minLength(6)]]
   })
-
-  get email(){
-    return this.loginForm.get('email')
+  get usernameOrEmail() {
+    return this.loginForm.get('usernameOrEmail');
   }
 
-  get password(){
-    return this.loginForm.get('password')
+  get password() {
+    return this.loginForm.get('password');
   }
 
+
+
+  // //onLoginHandler() {
+  //   if (this.loginForm.valid) {
+  //     const usernameOrEmail = this.loginForm.value.usernameOrEmail;
+  //     const password = this.loginForm.value.password;
+  //     const login = this.loginForm.value;
+
+  //     console.log('Username or Email:', usernameOrEmail);
+  //     console.log('Password:', password);
+  //     console.log('Login:', login);
+  //   }
+  //}
   onLoginHandler(){
-    console.log(this.loginForm.value)
+    if(this.loginForm.valid){
+      const userPayload = {
+      usernameOrEmail: this.loginForm.value.usernameOrEmail,
+      password: this.loginForm.value.password
+    }
+    this.authService.login(userPayload)
+    .subscribe({
+      next: () => {
+        this.message = "Registration Successful",
+        this.alertClass = 'alert alert-success';
+      },
+      error: (error) => {
+        this.message = "Registration failed";
+        this.alertClass = 'alert alert-danger';
+        console.log(error);
+      }
+    });
+    console.log(userPayload)
   }
-
+  }
 }
