@@ -1,7 +1,9 @@
 package com.tweet.cogent.tweet.app.controller;
 
+import com.tweet.cogent.tweet.app.model.UserDto;
 import com.tweet.cogent.tweet.app.entity.User;
 import com.tweet.cogent.tweet.app.service.UserService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,12 @@ public class UserController {
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<String> userLogin(@RequestBody User user) {
-        if (userService.isUserExist(user.getLoginId())) {
-            User userInDb = userService.findByLoginId(user.getLoginId());
-            if (user.getPassword().equals(userInDb.getPassword())) {
+    @PostMapping("/login")
+    public ResponseEntity<String> userLogin(@RequestBody UserDto userDto) {
+        // Check if user exists by loginId or userName
+        User userInDb = userService.findByLoginIdOrEmail(userDto.getUsernameOrEmail(), userDto.getUsernameOrEmail());
+        if (userInDb != null) {
+            if (userDto.getPassword().equals(userInDb.getPassword())) {
                 return new ResponseEntity<>("login success", HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("wrong password", HttpStatus.BAD_REQUEST);

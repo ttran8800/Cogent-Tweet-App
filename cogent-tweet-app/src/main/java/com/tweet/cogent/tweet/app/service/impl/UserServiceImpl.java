@@ -30,6 +30,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByLoginIdOrEmail(String loginId, String email) {
+        return userRepository.findByLoginIdOrEmail(loginId, email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+
+    @Override
     public boolean isUserExist(String loginId) {
         return userRepository.existsByLoginId(loginId);
     }
