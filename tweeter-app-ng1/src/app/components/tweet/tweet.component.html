@@ -1,0 +1,45 @@
+<form [formGroup]="tweetForm">
+    <div class="row">
+        <div class="col-sm-3">
+            <!-- <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Special title treatment</h5>
+              <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+              <a href="#" class="btn btn-primary">Go somewhere</a>
+            </div>
+          </div> -->
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <img class="avator" src="assets/img/player.png" alt="">
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <label>{{userHandle}}</label>
+                                </div>
+                                <div class="cold-sm-4">
+                                    <label>{{currentTime}}</label>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <label>Message</label>
+                                <input type="text" class="form-control" formControlName="tweetMessage"
+                                    [class.is-invalid]="tweetForm.get('tweetMessage')?.invalid && tweetForm.get('tweetMessage')?.touched" maxlength="50" (input)="checkLength()">
+                                <div *ngIf="tweetMessage?.errors && tweetMessage?.touched">
+                                    <small class="text-danger" *ngIf="tweetMessage?.errors?.['required']">Tweet must contain message</small>
+                                </div>
+                                <div *ngIf="tweetMessage?.value?.length === 50">
+                                    <small class="text-danger" >Maximum character length reached</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
