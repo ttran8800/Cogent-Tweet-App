@@ -52,9 +52,6 @@ public class AuthenticationController {
                 return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
             }
             return ResponseEntity.ok(response);
-        } catch (AuthenticationException ex) {
-            logger.error("Login failed for user: {}", loginDTO.getUsernameOrEmail(), ex);
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(true, "Authentication failed: Invalid username or password", null));
         } catch (Exception ex) {
             logger.error("Login error: {}", ex.getMessage(), ex);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new LoginResponse(true, "Error during login: " + ex.getMessage(), null));

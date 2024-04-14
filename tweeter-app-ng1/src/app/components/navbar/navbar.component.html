@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="#" routerLink="/home">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Tweets</a>
@@ -30,9 +30,9 @@
             </li> -->
         </ul>
         <div class="form-inline">
-            <a class="nav-link btn btn-outline-primary a-register" href="#" routerLink="register" *ngIf="!checkToken()">Register</a>
-            <a class="nav-link btn btn-success" href="#" routerLink="login" *ngIf="!checkToken()">Login</a>
-            <a class="nav-link btn btn-danger" href="#" *ngIf="checkToken()" (click)="onLogout()">Logout</a>
+            <a class="nav-link btn btn-primary user-profile" href="#" routerLink="/user-profile" *ngIf="checkToken()">{{user?.loginId}} profile</a>
+            <button class="nav-link btn btn-success" routerLink="/login" *ngIf="!checkToken()">Login</button>
+            <button class="nav-link btn btn-danger" *ngIf="checkToken()" (click)="onLogout()">Logout</button>
         </div>
     </div>
 </nav>

@@ -4,8 +4,8 @@
     <div class="col-md-6">
       <div class="wrapper">
         <div class="{{alertClass}}" role="alert"> {{message}}
-
-        </div>
+          <p *ngIf="isLogin">{{redirectMessage}} {{countdown}} seconds...</p>
+      </div>
         <h2>Login</h2>
         <hr />
         <form [formGroup]="loginForm" (submit)="onLoginHandler()">
