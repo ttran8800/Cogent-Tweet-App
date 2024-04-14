@@ -99,7 +99,7 @@ export class RegisterComponent {
   }
 
   redirect() {
-    this.router.navigateByUrl('login');
+    this.router.navigateByUrl('/login');
   }
 
 }
