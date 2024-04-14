@@ -11,12 +11,6 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="register">Register</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="#">Tweets</a>
             </li>
             <li class="nav-item">
@@ -35,9 +29,11 @@
                 </div>
             </li> -->
         </ul>
-        <!-- <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form> -->
+        <div class="form-inline">
+            <a class="nav-link btn btn-outline-primary a-register" href="#" routerLink="register" *ngIf="!checkToken()">Register</a>
+            <a class="nav-link btn btn-success" href="#" routerLink="login" *ngIf="!checkToken()">Login</a>
+            <a class="nav-link btn btn-danger" href="#" *ngIf="checkToken()" (click)="onLogout()">Logout</a>
+        </div>
     </div>
 </nav>
+
