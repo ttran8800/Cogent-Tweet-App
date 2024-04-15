@@ -1,6 +1,7 @@
 package com.tweet.cogent.tweet.app.service.impl;
 
 import com.tweet.cogent.tweet.app.entity.Role;
+import com.tweet.cogent.tweet.app.entity.Tweet;
 import com.tweet.cogent.tweet.app.entity.User;
 import com.tweet.cogent.tweet.app.repository.RoleRepository;
 import com.tweet.cogent.tweet.app.repository.UserRepository;
@@ -9,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -68,5 +72,16 @@ public class UserServiceImpl implements UserService {
 
         userRepository.save(updateUser);
         return updateUser;
+    }
+
+    @Override
+    public List<Tweet> getAllUserRecentTweet() {
+        List<User> allUser = userRepository.findAll();
+        return allUser.stream()
+                .filter(user -> user.getTweets() != null && !user.getTweets().isEmpty())
+                .map(user -> user.getTweets().stream()
+                        .max(Comparator.comparing(Tweet::getDate))
+                        .orElse(null))
+                .toList();
     }
 }

@@ -1,5 +1,6 @@
 package com.tweet.cogent.tweet.app.controller;
 
+import com.tweet.cogent.tweet.app.entity.Tweet;
 import com.tweet.cogent.tweet.app.entity.User;
 import com.tweet.cogent.tweet.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -18,9 +20,13 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users/all")
-    public ResponseEntity<List<User>> getAllUser() {
-        List<User> userList = userService.getAllUsers();
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+    public ResponseEntity<List<Tweet>> getAllUser(Authentication authentication) {
+        if (authentication != null) {
+            List<User> userList = userService.getAllUsers();
+            List<Tweet> allUserRecentTweet = userService.getAllUserRecentTweet();
+            return new ResponseEntity<>(allUserRecentTweet, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
     @GetMapping("/users/getUser")

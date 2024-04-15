@@ -14,7 +14,7 @@ export class RegisterComponent {
   message = ''
   alertClass = ''
 
-  countdown: number = 10;
+  countdown: number = 5;
   redirectMessage: string = 'Redirecting in ';
   isRegister: boolean = false;
 

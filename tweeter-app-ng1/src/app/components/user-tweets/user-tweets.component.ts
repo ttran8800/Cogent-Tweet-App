@@ -22,6 +22,9 @@ export class UserTweetsComponent implements OnInit, OnDestroy{
         this.subscription.add(
           this.dataService.user$.subscribe(user => {
             this.user = user;
+            if (this.user && this.user.tweets) {
+              this.user.tweets = this.user.tweets.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+            }
           })
         );
         this.subscription.add(
