@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from '../models/user.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ITweetPayload } from '../payloads/tweet.payload';
 
 @Injectable({
   providedIn: 'root'
@@ -31,4 +32,16 @@ export class DataService {
     });
   }
 
+  createTweet(tweet: ITweetPayload): void {
+    this.http.post<IUser>(`${this.BASE_URL}/${tweet.loginId}/add`, tweet, {observe: 'response'}).subscribe({
+      next: (response) => {
+        console.log('Full HTTP response:', response); // Log the full HTTP response
+        this.userSubject.next(response.body);
+        console.log('Tweet created and user updated:', response.body);
+      },
+      error: (error) => {
+        console.error('Error creating tweet:', error);
+      }
+    });
+}
 }

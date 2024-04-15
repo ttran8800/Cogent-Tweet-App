@@ -12,6 +12,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { HttpTokenLoader } from './utils/HttpTokenLoader.util';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
+import { TweetComponent } from './components/tweet/tweet.component';
+import { UserTweetsComponent } from './components/user-tweets/user-tweets.component';
+import { TimeAgoPipe } from './pipe/timeAgo.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { UserProfileComponent } from './pages/user-profile/user-profile.componen
     LoginPageComponent,
     HomeComponent,
     HeaderComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    TweetComponent,
+    UserTweetsComponent,
+    TimeAgoPipe
   ],
   imports: [
     BrowserModule,
