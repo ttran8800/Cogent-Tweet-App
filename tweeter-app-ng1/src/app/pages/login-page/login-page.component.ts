@@ -12,7 +12,7 @@ import { DataService } from 'src/app/services/data.service';
 export class LoginPageComponent {
   message = ''
   alertClass = ''
-  countdown: number = 10;
+  countdown: number = 5;
   redirectMessage: string = 'Redirecting in ';
   isLogin: boolean = false;
 
