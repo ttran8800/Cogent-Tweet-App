@@ -6,18 +6,19 @@ import com.tweet.cogent.tweet.app.repository.RoleRepository;
 import com.tweet.cogent.tweet.app.repository.UserRepository;
 import com.tweet.cogent.tweet.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow();
@@ -30,15 +31,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByLoginIdOrEmail(String loginId, String email) {
-        return userRepository.findByLoginIdOrEmail(loginId, email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+    public boolean isUserExistByLoginId(String loginId) {
+        return userRepository.existsByLoginId(loginId);
     }
 
-
     @Override
-    public boolean isUserExist(String loginId) {
-        return userRepository.existsByLoginId(loginId);
+    public boolean isUserExistByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 
     @Override
@@ -56,5 +55,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User updateUser(User user) {
+        User updateUser = userRepository.findByEmail(user.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        updateUser.setFirstName(user.getFirstName());
+        updateUser.setLastName(user.getLastName());
+        updateUser.setContactNumber(user.getContactNumber());
+        updateUser.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        userRepository.save(updateUser);
+        return updateUser;
     }
 }
