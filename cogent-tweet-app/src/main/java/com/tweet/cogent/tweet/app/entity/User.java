@@ -1,5 +1,6 @@
 package com.tweet.cogent.tweet.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -68,5 +69,6 @@ public class User {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
+    @JsonManagedReference
     private Set<Tweet> tweets = new HashSet<>();
 }

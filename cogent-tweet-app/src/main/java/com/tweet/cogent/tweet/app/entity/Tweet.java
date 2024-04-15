@@ -1,5 +1,6 @@
 package com.tweet.cogent.tweet.app.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class Tweet {
             name = "user_Id",
             nullable = false
     )
+    @JsonBackReference
     private User user;
 
     @ManyToMany (
@@ -45,4 +47,22 @@ public class Tweet {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_tweet_id")
     private Tweet parentTweet;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tweet tweet = (Tweet) o;
+        return Objects.equals(tweetId, tweet.tweetId) &&
+                Objects.equals(nameWithHandle, tweet.nameWithHandle) &&
+                Objects.equals(date, tweet.date) &&
+                Objects.equals(message, tweet.message);
+        // Note: Excluding user and parentTweet to prevent recursion
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tweetId, nameWithHandle, date, message);
+        // Note: Excluding user and parentTweet to prevent recursion
+    }
 }
