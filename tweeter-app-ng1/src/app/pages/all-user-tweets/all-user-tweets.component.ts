@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { Subscription } from 'rxjs';
 import { ITweet } from 'src/app/models/tweet.model';
+import { Router, ActivatedRoute } from '@angular/router';
+import { TweetService } from 'src/app/services/tweet.service';
 
 @Component({
   selector: 'app-all-user-tweets',
@@ -12,9 +14,13 @@ export class AllUserTweetsComponent implements OnInit, OnDestroy {
 
   tweetList: ITweet[] | null = null;
 
+
   private subscription: Subscription = new Subscription();
 
-  constructor(private dataService: DataService) {
+  constructor(private dataService: DataService,
+              private router: Router,
+              private tweetService: TweetService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -30,5 +36,10 @@ export class AllUserTweetsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  onTweetBoxClick(tweet: ITweet) {
+      localStorage.setItem('parentTweetId', `${tweet.tweetId}`);
+      this.router.navigate(['/tweet-page'], { state: { tweet:tweet } });
   }
 }

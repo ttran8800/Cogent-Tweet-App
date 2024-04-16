@@ -17,12 +17,12 @@
                                 <img class="avator" src="assets/img/player.png" alt="">
                             </div>
                         </div>
-                        <div class="col-sm-8 maincol">
-                            <div class="row">
-                                <div class="col-sm-8">
+                        <div class="col-sm-8">
+                            <div class="row justify-content-between">
+                                <div class="col-auto">
                                     <label class="tweet-handle">@{{user?.loginId}}</label>
                                 </div>
-                                <div class="cold-sm-4">
+                                <div class="col-auto">
                                     <label>{{currentTime | date: 'mediumTime'}}</label>
                                 </div>
                             </div>
@@ -31,7 +31,7 @@
                                     <label>Message</label>
                                 
                                 <textarea rows="2" cols="55" class="form-control tweet-message-box" formControlName="tweetMessage"
-                                    [class.is-invalid]="tweetForm.get('tweetMessage')?.invalid && tweetForm.get('tweetMessage')?.touched" maxlength="50" (input)="checkLength()" [(ngModel)]="message" ></textarea>
+                                    [class.is-invalid]="tweetForm.get('tweetMessage')?.invalid && tweetForm.get('tweetMessage')?.touched" maxlength="50" (input)="checkLength()" ></textarea>
                                     
                                 <div *ngIf="tweetMessage?.errors && tweetMessage?.touched">
                                     <small class="text-danger" *ngIf="tweetMessage?.errors?.['required']">Tweet must contain message</small>

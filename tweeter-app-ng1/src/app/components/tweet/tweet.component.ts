@@ -14,8 +14,6 @@ import { ClockService } from 'src/app/services/clock.service';
 export class TweetComponent implements OnInit, OnDestroy {
 
   currentTime?: Date;
-  message = '';
-
 
   user: IUser | null = null;
   private subscription: Subscription = new Subscription();
@@ -51,10 +49,11 @@ export class TweetComponent implements OnInit, OnDestroy {
 
   onSubmitHandler() {
     if (this.tweetForm.valid) {
+      const message = this.tweetForm.get('tweetMessage')!.value;
         this.clockService.getClock().pipe(take(1)).subscribe(currentDate => {
           const tweetPayload: ITweetPayload = {
             loginId: this.user!.loginId,
-            message: this.message,
+            message: message!,
             date: currentDate
           };
           this.dataService.createTweet(tweetPayload);

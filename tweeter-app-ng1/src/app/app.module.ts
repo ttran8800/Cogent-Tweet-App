@@ -17,6 +17,8 @@ import { UserTweetsComponent } from './components/user-tweets/user-tweets.compon
 import { TimeAgoPipe } from './pipe/timeAgo.pipe';
 import { AllUserTweetsComponent } from './pages/all-user-tweets/all-user-tweets.component';
 import { CurrentUserTweetsComponent } from './pages/current-user-tweets/current-user-tweets.component';
+import { TweetPageComponent } from './pages/tweet-page/tweet-page.component';
+import { TweetReplyListComponent } from './components/tweet-reply-list/tweet-reply-list.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { CurrentUserTweetsComponent } from './pages/current-user-tweets/current-
     UserTweetsComponent,
     TimeAgoPipe,
     AllUserTweetsComponent,
-    CurrentUserTweetsComponent
+    CurrentUserTweetsComponent,
+    TweetPageComponent,
+    TweetReplyListComponent,
   ],
   imports: [
     BrowserModule,
