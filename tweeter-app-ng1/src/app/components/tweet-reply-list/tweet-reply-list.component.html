@@ -1,14 +1,14 @@
-<div class="row">
+<div class="row mt-4">
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
-        <h1 class="title">Recent Tweets From Each Users</h1>
+        <h1 class="title">REPLIES</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-2"></div>
     <div class="col-sm-8">
-        <div class="card" *ngFor="let tweet of tweetList">
-            <div class="card-body tweet-box" (click)="onTweetBoxClick(tweet)">
+        <div class="card" *ngFor="let reply of tweetReplies">
+            <div class="card-body tweet-box" (click)="onTweetBoxClick(reply)">
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="avator-container">
@@ -18,10 +18,10 @@
                     <div class="col-sm-8">
                         <div class="row justify-content-between">
                             <div class="col-auto">
-                                <label for="" class="tweet-handle">@{{tweet.nameWithHandle}}</label>
+                                <label for="" class="tweet-handle">@{{reply.nameWithHandle}}</label>
                             </div>
                             <div class="col-auto">
-                                <label for="">{{tweet.date | timeAgo }}</label>
+                                <label for="">{{reply.date | timeAgo }}</label>
                             </div>
                         </div>
                         <div class="row">
@@ -31,7 +31,7 @@
                         </div>
                         <div class="row tweet-messages">
                             <div class="col-sm-12">
-                                <p>{{tweet.message}}</p>
+                                <p>{{reply.message}}</p>
                             </div>
                         </div>
                     </div>

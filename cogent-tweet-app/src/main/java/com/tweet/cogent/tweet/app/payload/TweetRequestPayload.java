@@ -10,6 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TweetRequestPayload {
+    private Long tweetId;
     private String loginId;
     private String message;
     private Date date;

@@ -16,16 +16,22 @@ export class DataService {
   private allUserTweetSubject = new BehaviorSubject<ITweet[] | null>(null);
   public allUserTweet$: Observable<ITweet[] | null> = this.allUserTweetSubject.asObservable();
 
+  private tweetRepliesSubject = new BehaviorSubject<ITweet[] | null>(null);
+  public tweetReplies$: Observable<ITweet[] | null> = this.tweetRepliesSubject.asObservable();
+
   constructor(private http: HttpClient) {
-    this.getUser();
-    this.getAllUserTweet();
+    if(localStorage.getItem('token')) {
+      this.getUser();
+    }
   }
 
   private BASE_URL = 'http://localhost:8000/api/v1.0/tweets';
 
   getUser(): void {
     this.http.get<IUser>(`${this.BASE_URL}/users/getUser`).subscribe({
-      next: (user) => this.userSubject.next(user),
+      next: (user) => {
+        this.userSubject.next(user); this.getAllUserTweet();
+      },
       error: (error) => console.log('Error fetching user:', error)
     });
   }
@@ -45,16 +51,44 @@ export class DataService {
   }
 
   createTweet(tweet: ITweetPayload): void {
-    this.http.post<IUser>(`${this.BASE_URL}/${tweet.loginId}/add`, tweet, {observe: 'response'}).subscribe({
+    this.http.post<IUser>(`${this.BASE_URL}/${tweet.loginId}/add`, tweet, { observe: 'response' }).subscribe({
       next: (response) => {
         console.log('Full HTTP response:', response); // Log the full HTTP response
         this.userSubject.next(response.body);
         console.log('Tweet created and user updated:', response.body);
+        this.getAllUserTweet();
       },
       error: (error) => {
         console.error('Error creating tweet:', error);
       }
     });
-    this.getAllUserTweet();
-}
+  }
+
+  createTweetReply(reply: ITweetPayload): void {
+    const parentId = localStorage.getItem('parentTweetId');
+    this.http.post<IUser>(`${this.BASE_URL}/${reply.loginId}/reply/${reply.tweetId}`, reply, { observe: 'response' }).subscribe({
+      next: (response) => {
+        this.userSubject.next(response.body);
+        this.fetchAndUpdateReplies(`${parentId}`);
+        this.getAllUserTweet();
+      },
+      error: (error) => {
+        console.error('Error creating tweet:', error);
+      }
+    });
+  }
+
+  getAllTweetReplies(parentTweet: string): Observable<ITweet[]> {
+    return this.http.get<ITweet[]>(`${this.BASE_URL}/allReplies/${parentTweet}`)
+  }
+
+  fetchAndUpdateReplies(parentId: string) {
+    this.getAllTweetReplies(parentId).subscribe({
+      next: replies => {
+        this.tweetRepliesSubject.next(replies);
+        console.log('updated replies:', replies);
+      },
+      error: error => console.error('Error fetching replies:', error)
+    });
+  }
 }

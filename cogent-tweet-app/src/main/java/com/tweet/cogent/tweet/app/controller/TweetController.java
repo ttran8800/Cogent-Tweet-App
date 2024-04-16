@@ -33,6 +33,19 @@ public class TweetController {
         return new ResponseEntity<>(tweetList, HttpStatus.OK);
     }
 
+    @GetMapping("/allReplies/{parentId}")
+    public ResponseEntity<?> getAllTweetReplies(@PathVariable("parentId") Long id, Authentication authentication) {
+        if (authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }try {
+            List<Tweet> tweetReplyList = tweetService.getAllTweetReplies(id);
+            return new ResponseEntity<>(tweetReplyList, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error creating tweet: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @GetMapping("/{username}")
     public ResponseEntity<List<Tweet>> getAllTweetFromUser(@PathVariable("username") String username) {
         User user = userService.findByLoginId(username);
@@ -56,4 +69,17 @@ public class TweetController {
         }
     }
 
+    @PostMapping("/{username}/reply/{id}")
+    public ResponseEntity<?> replyTweet(@PathVariable("username") String username, @RequestBody TweetRequestPayload tweet, Authentication authentication) {
+        if (authentication == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        try {
+            User updatedUser = tweetService.createTweetReply(tweet);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } catch (Exception e) {
+            logger.error("Error creating tweet: ", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 }

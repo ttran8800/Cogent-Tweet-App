@@ -43,6 +43,26 @@ public class TweetServiceImpl implements TweetService {
     }
 
     @Override
+    @Transactional
+    public User createTweetReply(TweetRequestPayload tweet) {
+        User existingUser = userRepository.findByLoginId(tweet.getLoginId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Tweet parentTweet = tweetRepository.findById(tweet.getTweetId())
+                .orElseThrow(() -> new RuntimeException("Tweet not found"));
+
+        Tweet replyTweet = new Tweet();
+        replyTweet.setParentTweet(parentTweet);
+        replyTweet.setUser(existingUser);
+        replyTweet.setNameWithHandle(existingUser.getLoginId());
+        replyTweet.setMessage(tweet.getMessage());
+        replyTweet.setDate(tweet.getDate());
+        existingUser.getTweets().add(replyTweet);
+        parentTweet.getReplies().add(replyTweet);
+        tweetRepository.save(replyTweet);
+        return existingUser;
+    }
+
+    @Override
     public Tweet getTweetById(Long tweetId) {
         return tweetRepository.findById(tweetId).orElseThrow(() -> new RuntimeException("Tweet not found"));
     }
@@ -50,6 +70,12 @@ public class TweetServiceImpl implements TweetService {
     @Override
     public List<Tweet> getAllTweet() {
         return tweetRepository.findAll();
+    }
+
+    @Override
+    public List<Tweet> getAllTweetReplies(Long parentId) {
+        Tweet parentTweet = tweetRepository.findById(parentId).orElseThrow(() -> new RuntimeException("Tweet not found"));
+        return parentTweet.getReplies().stream().toList();
     }
 
     @Override

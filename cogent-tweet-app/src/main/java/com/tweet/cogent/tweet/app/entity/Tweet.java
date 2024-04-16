@@ -1,6 +1,7 @@
 package com.tweet.cogent.tweet.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,9 +45,13 @@ public class Tweet {
     )
     Set<Tag> tagSet = new HashSet<>();
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "parent_tweet_id")
     private Tweet parentTweet;
+
+    @OneToMany(mappedBy = "parentTweet", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private Set<Tweet> replies = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
