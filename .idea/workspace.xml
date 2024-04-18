@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5173bdf8-61af-4e11-b77c-1a36519938aa" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/cogent-tweet-app/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cogent-tweet-app/src/main/java/com/tweet/cogent/tweet/app/CogentTweetAppApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/cogent-tweet-app/src/main/java/com/tweet/cogent/tweet/app/CogentTweetAppApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cogent-tweet-app/src/main/resources/application.properties" beforeDir="false" />
-    </list>
+    <list default="true" id="5173bdf8-61af-4e11-b77c-1a36519938aa" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,9 +28,9 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "td-ng",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Odin/Desktop/Cogent-Tweet-App",
+    "last_opened_file_path": "C:/Users/anthony/cogent-tweeter-app-main/Cogent-Tweet-App/cogent-tweet-app",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.2",
